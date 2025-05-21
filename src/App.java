@@ -1,11 +1,15 @@
 import model.Pessoa;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import model.Funcionario;
 
@@ -32,10 +36,44 @@ public class App {
         System.out.println("******************************************************");
 
         System.out.println("******************************************************");
-        System.out.println("INICIANDO ITEM 3.3- IMPRIMINDO DATA COM FORMATO DD/MM/AAAA");
-        for (Funcionario funcionario2 : funcionarios) {
-        System.out.println(funcionario2.toString());
-        }
+        System.out.println("INICIANDO ITEM 3.3- IMPRIMINDO DATA COM FORMATO DD/MM/AAAA E SALARIO FORMATADO:");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                funcionarios.forEach(
+                    f -> 
+                    System.out.println(
+                        "Nome: " + f.getNome() +
+                        ", Data de Nascimento: " + f.getDataNascimento().format(formatter) +
+                        ", Salário: " + String.format("%,.2f", f.getSalario()).replace(",", "#")
+                                                                              .replace(".", ",")
+                                                                              .replace("#", ".")+ 
+                        ", Função: " + f.getFuncao()));
+
+        System.out.println("******************************************************");
+
+        System.out.println("******************************************************");
+        System.out.println("INICIANDO ITEM 3.4- AUMENTANDO SALÁRIO EM 10%:");
+        funcionarios.forEach(
+            f ->  f.setSalario(
+                new BigDecimal(f.getSalario().intValue() + (f.getSalario().intValue() * 0.1)).setScale(2,RoundingMode.HALF_EVEN)
+                )
+            );
+
+        funcionarios.forEach(
+            f -> System.out.println(f)
+            );
+
+        System.out.println("******************************************************");
+
+        System.out.println("******************************************************");
+        System.out.println("INICIANDO ITEM 3.5- AGRUPANDO COM MAP:");
+
+        Map<String, List<Funcionario>> mapaFuncionarios = funcionarios.stream().collect(Collectors.groupingBy(Funcionario::getFuncao));
+        mapaFuncionarios.forEach((funcao, listaFuncionarios) -> {
+            System.out.println("Função: " + funcao);
+            listaFuncionarios.forEach(f -> System.out.println(f));
+        });
+
+
         System.out.println("******************************************************");
 
     }

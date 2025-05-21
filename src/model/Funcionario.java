@@ -34,10 +34,7 @@ public class Funcionario extends Pessoa{
     }
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String dataFormatada = dataNascimento.format(formatter) ;
-
-        return "Funcionario [nome=" + nome + ", dataNascimento=" + dataFormatada + ", Salario=" + Salario + ", funcao="
+        return "Funcionario [nome=" + nome + ", dataNascimento=" + dataNascimento + ", Salario=" + Salario + ", funcao="
                 + funcao + "]";
     }
 
